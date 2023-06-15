@@ -34,7 +34,7 @@ public class BaseController {
         }
     }
 
-    @RequestMapping(value = {"/","/default"})
+    @RequestMapping(value = {"/","/default","/user"})
     public String defaultPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -45,7 +45,7 @@ public class BaseController {
         if (isAdmin) {
             return "redirect:/admin";
         } else {
-            return "redirect:/user";
+            return "redirect:/packagetracking";
         }
 
     }
@@ -55,12 +55,12 @@ public class BaseController {
             @RequestParam(value = "adminRedirect", defaultValue = "false") boolean adminRedirect,
             @RequestParam(value = "userRedirect", defaultValue = "false") boolean userRedirect) {
         if(userRedirect){
-            return "redirect:/user";
+            return "redirect:/packagetracking";
         }
         return "secured/index";
     }
 
-    @GetMapping(value = {"/user","/packagetracking","/public/home", "/packagetracking/public/home"})
+    @GetMapping(value = {"/packagetracking","/public/home", "/packagetracking/public/home"})
     public String userPage(
             @RequestParam(value = "adminRedirect", defaultValue = "false") boolean adminRedirect,
             @RequestParam(value = "userRedirect", defaultValue = "false") boolean userRedirect) {
