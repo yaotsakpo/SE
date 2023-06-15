@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+    <title>Online Package Tracking Service - Admin</title>
+</head>
+<body>
+    <div layout:fragment="content">
+
+        <!-- =-=-=-=-=-=-= Tracking History =-=-=-=-=-=-= -->
+        <section id="order-tracking" class="section-padding-80">
+            <div class="container">
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-sm-12 col-xs-12 col-md-12">
+                        <!-- Search Filter -->
+                        <div class="tracking-search">
+                            <div class="input-group" id="adv-search">
+                                <input type="text" class="form-control" placeholder="Track Your Package" />
+                                <div class="input-group-btn">
+                                    <div class="btn-group" role="group">
+                                        <div class="dropdown dropdown-lg">
+                                            <button type="button" class="btn btn-default dropdown-toggle"
+                                                    data-toggle="dropdown" aria-expanded="false"><span
+                                                    class="caret"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                <form class="form-horizontal" role="form">
+                                                    <div class="form-group">
+                                                        <label for="filter">Filter by</label>
+                                                        <select class="form-control">
+                                                            <option value="0" selected>Order History</option>
+                                                            <option value="1">Delivered</option>
+                                                            <option value="2">Shipped</option>
+                                                            <option value="3">Pending</option>
+                                                            <option value="4">Canceled</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary"><span
+                                                class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Search Filter End -->
+                        <!-- Tracking History -->
+                        <div class="block-content">
+                            <div class="table-responsive">
+                                <table class="table table-clean-paddings margin-bottom-0">
+                                    <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Shipped From</th>
+                                        <th>Shipping Id</th>
+                                        <th>Destination</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="contact-container"><a href="#">Muhammad Umair</a> <span>on Aug
+													19, 2016</span></div>
+                                        </td>
+                                        <td>London</td>
+                                        <td>SW-95-21</td>
+                                        <td>New York</td>
+                                        <td><span class="label label-success label-transparent">Delivered</span></td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Tracking History End -->
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- end container -->
+        </section>
+        <!-- =-=-=-=-=-=-= Tracking History End =-=-=-=-=-=-= -->
+    </div>
+    <th:block layout:fragment="footer"></th:block>
+</body>
+</html>

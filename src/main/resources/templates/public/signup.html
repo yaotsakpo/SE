@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+    <title>Online Package Tracking Service -Admin Sign Up</title>
+</head>
+<body>
+    <div layout:fragment="content" >
+
+        <!-- =-=-=-=-=-=-= PAGE BREADCRUMB =-=-=-=-=-=-= -->
+        <section class="breadcrumbs-area parallex">
+            <div class="container">
+                <div class="row">
+                    <div class="page-title">
+                        <div class="col-sm-12 col-md-6 page-heading text-left">
+                            <h3>create your account</h3>
+                            <h2>Sign Up</h2>
+                        </div>
+                        <div class="col-sm-12 col-md-6 text-right">
+                            <ul class="breadcrumbs">
+                                <li><a href="/">home</a></li>
+                                <li><a href="#">sign up</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =-=-=-=-=-=-= PAGE BREADCRUMB END =-=-=-=-=-=-= -->
+
+        <!-- =-=-=-=-=-=-= Sign UP Section =-=-=-=-=-=-= -->
+
+        <section class="section-padding-70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <form class="registration" th:action="@{/packagetracking/public/signup}" method="post" th:object="${user}">
+                            <input
+                                    type="hidden"
+                                    th:name="${_csrf.parameterName}"
+                                    th:value="${_csrf.token}" />
+                            <input type="hidden" name="userId" th:value="${user.userId}">
+
+                            <div class="box-header">
+                                <h2>Register a new account</h2>
+                                <p>Already Signed Up? Click <a href="/packagetracking/public/login">Sign In</a> to login your account.</p>
+                            </div>
+
+                            <label>First Name</label>
+                            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                                  class="alert alert-danger"></span>
+                            <input id="firstName" name="firstName" type="text" class="form-control margin-bottom-20"
+                                   th:value="${user.firstName}" required autofocus>
+
+                            <label>Last Name</label>
+                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                  class="alert alert-danger"></span>
+                            <input id="lastName" name="lastName" type="text" class="form-control margin-bottom-20"
+                                   th:value="${user.lastName}" required>
+
+                            <label>Email Address <span class="color-red">*</span></label>
+                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                  class="alert alert-danger"></span>
+                            <input id="email" name="email" type="text" class="form-control margin-bottom-20"
+                                   th:value="${user.email}" required>
+
+                            <label for="username">Username</label>
+                            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                                  class="alert alert-danger"></span>
+                            <input id="username" name="username" type="text" class="form-control margin-bottom-20"
+                                   th:value="${user.username}" required>
+
+                            <label>Password <span class="color-red">*</span></label>
+                            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                  class="alert alert-danger"></span>
+                            <input id="password" name="password" type="password" class="form-control margin-bottom-20"
+                                   th:value="${user.password}" minlength="8" required>
+
+                            <label>Phone Number <span class="color-red"></span></label>
+                            <input id="phoneNumber" name="phoneNumber" type="phoneNumber" class="form-control margin-bottom-20"
+                                   th:value="${user.phoneNumber}" minlength="8" required>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-12 text-right">
+                                    <button type="submit" class="btn btn-primary btn-sm">Register</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =-=-=-=-=-=-= Section End =-=-=-=-=-=-= -->
+
+    </div>
+
+    <th:block layout:fragment="footer"></th:block>
+
+</body>
+</html>

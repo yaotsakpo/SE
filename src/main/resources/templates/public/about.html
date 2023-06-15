@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+    <title>Online Package Tracking Service - About Us</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- =-=-=-=-=-=-= PAGE BREADCRUMB =-=-=-=-=-=-= -->
+        <section class="breadcrumbs-area parallex">
+            <div class="container">
+                <div class="row">
+                    <div class="page-title">
+                        <div class="col-sm-12 col-md-6 page-heading text-left">
+                            <h3>Who we are</h3>
+                            <h2>About Our Company</h2>
+                        </div>
+                        <div class="col-sm-12 col-md-6 text-right">
+                            <ul class="breadcrumbs">
+                                <li><a href="/">home</a></li>
+                                <li><a href="#">about our company</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =-=-=-=-=-=-= PAGE BREADCRUMB END =-=-=-=-=-=-= -->
+
+
+        <!-- =-=-=-=-=-=-= About Section =-=-=-=-=-=-= -->
+
+        <section class="padding-top-70" id="about">
+            <div class="container">
+                <div class="row clearfix">
+                    <!--Column-->
+                    <div class="col-md-7 col-sm-12 col-xs-12 ">
+                        <div class="about-title">
+                            <h2>We Provide Services All Over The World</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue justo scelerisque
+                                mattis iaculis. Maecenas vestibulum faucibus enim scelerisque egestas. Praesent facilisis,
+                                tortor vel vehicula imperdiet, felis massa ultrices metus, sed consectetur massa ex vitae
+                                sem. Integer eu sodales augue. Suspendisse eget placerat lorem. Phasellus ac hendrerit leo.
+                                Morbi quis iaculis eros. Sed tincidunt augue ante, sit amet vehicula odio aliquam quis.
+                                Donec at malesuada nisl. Pellentesque eros lorem, aliquet id hendrerit id, hendrerit ac
+                                odio. In dui mauris, auctor vel vestibulum vitae, tincidunt id mi. </p>
+                            <p>Curabitur dictum, sapien eu mattis pretium, ligula lorem sollicitudin mi, in gravida augue
+                                magna eu metus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis a
+                                ultrices tortor. Sed rutrum arcu mi, nec aliquet magna venenatis non. Nullam lectus neque,
+                                semper nec accumsan quis, ullamcorper eget risus. Nullam tristique mi nec dui bibendum
+                                egestas. Integer libero diam, dictum id faucibus id, lacinia eget lorem. Ut condimentum,
+                                lorem at eleifend pharetra, urna turpis ultrices nunc, sit amet suscipit nisl metus sit amet
+                                elit. Nam tristique mollis molestie. Maecenas bibendum rhoncus nisi, sit amet blandit tortor
+                                placerat nec. Sed nec aliquam tortor, ut vehicula eros. Vestibulum id ligula vel nunc mattis
+                                pharetra in non lectus. Etiam quis blandit ante. Donec non hendrerit justo, rhoncus iaculis
+                                sem. In varius finibus eros quis dictum tortor eu metus.</p>
+
+                            <p>Pellentesque pharetra orci quam, vel scelerisque massa semper et. Fusce vel tortor eu metus
+                                rhoncus blandit a vel turpis. Suspendisse sed facilisis lacus. Integer mattis interdum
+                                neque, non molestie risus facilisis et. Donec gravida luctus laoreet. Curabitur quis iaculis
+                                velit. Maecenas ut tincidunt elit, sed ultricies lectus. </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- RIght Grid Form -->
+                    <div class="col-md-5 col-sm-12 col-xs-12 our-gallery">
+                        <a class="tt-lightbox"  th:href="@{/images/about-company-1.png}"> <img
+                                class="img-responsive margin-bottom-30" alt="Image"  th:src="@{/images/about-company-1.png}" ></a>
+                        <a class="tt-lightbox" th:href="@{/images/about-company-2.png}"> <img
+                                class="img-responsive margin-bottom-30" alt="Image" th:src="@{/images/about-company-2.png}" ></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =-=-=-=-=-=-= About End =-=-=-=-=-=-= -->
+
+
+        <!-- =-=-=-=-=-=-= SEPARATOR Fun Facts =-=-=-=-=-=-= -->
+        <div class="parallex section-padding-70 fun-facts-bg text-center">
+            <div class="container">
+                <div class="row">
+                    <!-- countTo -->
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <div class="statistic-percent" data-perc="356">
+                            <div class="facts-icons"> <span class="flaticon-woman-with-headset"></span> </div>
+                            <div class="fact"> <span class="percentfactor">356</span>
+                                <p>Happy Clients</p>
+                            </div>
+                            <!-- end fact -->
+                        </div>
+                        <!-- end statistic-percent -->
+                    </div>
+                    <!-- end col-xs-6 col-sm-3 col-md-3 -->
+
+                    <!-- countTo -->
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <div class="statistic-percent" data-perc="126">
+                            <div class="facts-icons"> <span
+                                    class="flaticon-commercial-delivery-symbol-of-a-list-on-clipboard-on-a-box-package"></span>
+                            </div>
+                            <div class="fact"> <span class="percentfactor">126</span>
+                                <p>Order Received</p>
+                            </div>
+                            <!-- end fact -->
+                        </div>
+                        <!-- end statistic-percent -->
+                    </div>
+                    <!-- end col-xs-6 col-sm-3 col-md-3 -->
+
+                    <!-- countTo -->
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <div class="statistic-percent" data-perc="274">
+                            <div class="facts-icons"> <span class="flaticon-free-delivery-truck"></span> </div>
+                            <div class="fact"> <span class="percentfactor">274</span>
+                                <p>Free Delivery</p>
+                            </div>
+                            <!-- end fact -->
+                        </div>
+                        <!-- end statistic-percent -->
+                    </div>
+                    <!-- end col-xs-6 col-sm-3 col-md-3 -->
+
+                    <!-- countTo -->
+                    <div class="col-xs-6 col-sm-3 col-md-3">
+                        <div class="statistic-percent" data-perc="434">
+                            <div class="facts-icons"> <span class="flaticon-ocean-transportation"></span> </div>
+                            <div class="fact"> <span class="percentfactor">434</span>
+                                <p>Completed Projects</p>
+                            </div>
+                            <!-- end fact -->
+                        </div>
+                        <!-- end statistic-percent -->
+                    </div>
+                    <!-- end col-xs-6 col-sm-3 col-md-3 -->
+
+                </div>
+                <!-- End row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- =-=-=-=-=-=-= SEPARATOR END =-=-=-=-=-=-= -->
+
+        <!-- =-=-=-=-=-=-= Our Team =-=-=-=-=-=-= -->
+        <section id="team" class="custom-padding white">
+            <div class="container">
+                <!-- title-section -->
+                <div class="main-heading text-center">
+                    <h2>our caretakes</h2>
+                    <p>Cras varius purus in tempus porttitor ut dapibus efficitur sagittis cras vitae lacus metus nunc
+                        vulputate facilisis nisi <br> eu lobortis erat consequat ut. Aliquam et justo ante. Nam a cursus
+                        velit</p>
+                </div>
+                <!-- End title-section -->
+
+                <!-- Row -->
+                <div class="row">
+                    <!-- Team Grid -->
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="team-grid">
+                            <div class="team-image">
+                                <img alt="" class="img-responsive" src="images/team/1.jpg">
+                                <div class="team-grid-overlay">
+                                    <div class="social-media">
+                                        <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
+                                        <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
+                                        <a class="google" href="#"><i class="fa fa-google-plus"></i></a>
+                                        <a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-content">
+                                <h2>Roman Reigns</h2>
+                                <p>Founder</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Grid End-->
+                    <!-- Team Grid -->
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="team-grid">
+                            <div class="team-image">
+                                <img alt="" class="img-responsive" src="images/team/2.jpg">
+                                <div class="team-grid-overlay">
+                                    <div class="social-media">
+                                        <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
+                                        <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
+                                        <a class="google" href="#"><i class="fa fa-google-plus"></i></a>
+                                        <a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-content">
+                                <h2>Jean Carron</h2>
+                                <p>Director</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Grid End-->
+                    <!-- Team Grid -->
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="team-grid">
+                            <div class="team-image">
+                                <img alt="" class="img-responsive" src="images/team/3.jpg">
+                                <div class="team-grid-overlay">
+                                    <div class="social-media">
+                                        <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
+                                        <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
+                                        <a class="google" href="#"><i class="fa fa-google-plus"></i></a>
+                                        <a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-content">
+                                <h2>Arslan Tariq</h2>
+                                <p>CEO</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Grid End-->
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- end container -->
+        </section>
+        <!-- =-=-=-=-=-=-= Our Team End =-=-=-=-=-=-= -->
+    </div>
+
+    <th:block layout:fragment="footer"></th:block>
+
+    <div layout:fragment="jscontent">
+        <script type="text/javascript">
+            $(document).ready(function (e) {
+                  var activeID = $(".active").attr('id');
+                  $('#'+activeID).removeClass('active');
+                  $('#about_us').addClass('active');
+              });
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<header class="header-area" th:fragment="header" xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html">
+
+    <!-- Logo Bar -->
+    <div class="logo-bar">
+        <div class="container clearfix">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="/"><img th:src="@{/images/logo.png}" alt=""></a>
+            </div>
+
+            <!--Info Outer-->
+            <div class="information-content">
+                <!--Info Box-->
+                <div class="info-box hidden-sm">
+                    <div class="icon"><span class="icon-envelope"></span></div>
+                    <div class="text">EMAIL</div>
+                    <a href="mailt:contact@scriptsbundle.com">contact@onlinepackage.com</a>
+                </div>
+                <!--Info Box-->
+                <div class="info-box">
+                    <div class="icon"><span class="icon-phone"></span></div>
+                    <div class="text">Call Now</div>
+                    <a class="location" href="#">+1 (123) 123-4567</a>
+                </div>
+                <div class="info-box">
+                    <div class="icon"><span class="icon-map-pin"></span></div>
+                    <div class="text">Find Us</div>
+                    <a class="location" href="#">Fairfield, Iowa </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header Top End -->
+
+    <!-- Menu Section -->
+    <div class="navigation-2">
+        <!-- navigation-start -->
+        <nav class="navbar navbar-default ">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#main-navigation" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="main-navigation">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown" id="home">
+                            <a class="dropdown-toggle"  href="/">Home</a>
+                        </li>
+                        <li class="dropdown" id="tracking_list" sec:authorize="hasRole('ROLE_CUSTOMER')">
+                            <a class="dropdown-toggle"  href="/tracking_list" >Tracking Order History</a>
+                        </li>
+                        <li class="dropdown" id="new_package" sec:authorize="hasRole('ROLE_CUSTOMER')">
+                            <a class="dropdown-toggle"  href="/new_package" >Cargo Booking</a>
+                        </li>
+
+                        <li class="dropdown" id="about_us" sec:authorize="!hasRole('ROLE_ADMIN') or isAnonymous()">
+                            <a class="dropdown-toggle"  href="/packagetracking/about" >About Company</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+
+            </div>
+            <!-- /.container-end -->
+        </nav>
+    </div>
+    <!-- /.navigation-end -->
+    <!-- Menu End -->
+</header>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+  <title>Online Package Tracking Service - Profile</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <!-- =-=-=-=-=-=-= PAGE BREADCRUMB =-=-=-=-=-=-= -->
+    <section class="breadcrumbs-area parallex">
+        <div class="container">
+            <div class="row">
+                <div class="page-title">
+                    <div class="col-sm-12 col-md-6 page-heading text-left">
+                        <h3>my account </h3>
+                        <h2>My Profile</h2>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <ul class="breadcrumbs">
+                            <li><a href="/">home</a></li>
+                            <li><a href="#">profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =-=-=-=-=-=-= PAGE BREADCRUMB END =-=-=-=-=-=-= -->
+
+    <!-- =-=-=-=-=-=-= Blog & News =-=-=-=-=-=-= -->
+    <section id="blog" class="custom-padding">
+        <div class="container">
+            <!-- Row -->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="row">
+
+                        <div class="profile-section margin-bottom-20">
+                            <div class="profile-tabs">
+                                <ul class="nav nav-justified nav-tabs">
+                                    <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+                                    <li><a href="#edit" data-toggle="tab">Edit Profile</a></li>
+                                    <li><a href="#payment" data-toggle="tab">Payment Options</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="profile-edit tab-pane fade in active" id="profile">
+                                        <h2 class="heading-md">Manage your Name, ID and Email Addresses.</h2>
+                                        <p>Below are the name and email addresses on file for your account.</p>
+                                        <br>
+                                        <dl class="dl-horizontal">
+                                            <dt><strong>Your name </strong></dt>
+                                            <dd th:text="${user.fullName}" >
+                                            </dd>
+                                            <hr>
+                                            <dt><strong>Your ID </strong></dt>
+                                            <dd th:text="${user.userId}">
+                                            </dd>
+
+                                            <hr>
+                                            <dt><strong>Email Address </strong></dt>
+                                            <dd th:text="${user.email}">
+                                            </dd>
+                                            <hr>
+
+                                            <dt><strong>Phone Number </strong></dt>
+                                            <dd th:text="${user.phoneNumber}">
+                                            </dd>
+                                            <hr>
+                                            <dt><strong>Address </strong></dt>
+                                            <dd>
+                                                Lahore, PK
+                                            </dd>
+                                            <hr>
+                                        </dl>
+                                    </div>
+
+                                    <div class="profile-edit tab-pane fade" id="edit">
+                                        <h2 class="heading-md">Manage your Security Settings</h2>
+                                        <p>Change your password.</p>
+                                        <br>
+                                        <form>
+
+                                            <label>Your Name </label>
+                                            <input type="text" class="form-control margin-bottom-20">
+
+
+                                            <label>Email Address <span class="color-red">*</span></label>
+                                            <input type="text" class="form-control margin-bottom-20">
+
+                                            <label>Contact Number <span class="color-red">*</span></label>
+                                            <input type="text" class="form-control margin-bottom-20">
+
+                                            <label>Address <span class="color-red">*</span></label>
+                                            <textarea class="form-control margin-bottom-20" rows="3"></textarea>
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                                    <div class="checkbox checkbox-primary">
+                                                        <input type="checkbox" checked="" id="checkbox2">
+                                                        <label for="checkbox2">
+                                                            I read <a href="#">Terms and Conditions</a>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-md-4 col-sm-4 col-xs-12 text-right">
+                                                    <button type="submit" class="btn btn-primary btn-sm">Update My
+                                                        Info</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="profile-edit tab-pane fade" id="payment">
+                                        <h2 class="heading-md">Manage your Payment Settings</h2>
+                                        <p>Below are the payment options for your account.</p>
+                                        <br>
+                                        <form action="#" id="sky-form" class="sky-form" novalidate>
+                                            <!--Checkout-Form-->
+
+
+                                            <div class="payment-group margin-bottom-30">
+                                                <div class="radio radio-info radio-inline">
+                                                    <input type="radio" id="inlineRadio1" value="option1"
+                                                           name="radioInline" checked="">
+                                                    <label for="inlineRadio1"> Visa</label>
+                                                </div>
+                                                <div class="radio radio-info radio-inline">
+                                                    <input type="radio" id="inlineRadio2" value="option1"
+                                                           name="radioInline">
+                                                    <label for="inlineRadio2"> MasterCard </label>
+                                                </div>
+                                                <div class="radio radio-info radio-inline">
+                                                    <input type="radio" id="inlineRadio3" value="option1"
+                                                           name="radioInline">
+                                                    <label for="inlineRadio3"> PayPal </label>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row">
+                                                <div class="col-sm-9 col-md-9">
+                                                    <input type="text" class="form-control margin-bottom-20"
+                                                           placeholder="Card number" id="card" name="card">
+                                                </div>
+                                                <div class="col-sm-3 col-md-3">
+                                                    <input type="text" class="form-control margin-bottom-20"
+                                                           placeholder="CVV2" id="cvv" name="cvv">
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div class="row">
+                                                <label class="col-md-4"><span class="expiration-date">Expiration
+														Date</span> <span class="color-red">*</span></label>
+
+                                                <div class="col-md-5 ">
+                                                    <select name="month" class="form-control ">
+                                                        <option value="0" selected="" disabled="">Month</option>
+                                                        <option value="1">January</option>
+                                                        <option value="1">February</option>
+                                                        <option value="3">March</option>
+                                                        <option value="4">April</option>
+                                                        <option value="5">May</option>
+                                                        <option value="6">June</option>
+                                                        <option value="7">July</option>
+                                                        <option value="8">August</option>
+                                                        <option value="9">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">December</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col col-md-3">
+                                                    <label class="input">
+                                                        <input type="text" class="form-control margin-bottom-20"
+                                                               name="year" id="year" placeholder="Year">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-sm btn-default" type="button">Cancel</button>
+                                            <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
+                                            <!--End Checkout-Form-->
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Row End -->
+        </div>
+        <!-- end container -->
+    </section>
+    <!-- =-=-=-=-=-=-= Blog & News end =-=-=-=-=-=-= -->
+
+</div>
+
+<th:block layout:fragment="footer"></th:block>
+
+<div layout:fragment="jscontent">
+  <script type="text/javascript">
+
+      </script>
+</div>
+</body>
+</html>
