@@ -34,29 +34,39 @@ public class BaseController {
         }
     }
 
-    @RequestMapping("/default")
-    public String defaultPage(@RequestParam(value = "adminRedirect", required = false) boolean adminRedirect,
-                              @RequestParam(value = "userRedirect", required = false) boolean userRedirect) {
-        if (adminRedirect) {
+    @RequestMapping(value = {"/","/default"})
+    public String defaultPage() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+
+        if (isAdmin) {
             return "redirect:/admin";
-        } else if (userRedirect) {
+        } else {
             return "redirect:/user";
         }
-        return "default";
-    }
 
-    @RequestMapping(value = {"/","/packagetracking/"})
-    public String home() {
-        return "redirect:/default";
     }
 
     @GetMapping(value = {"/admin"})
-    public String adminPage() {
+    public String adminPage (
+            @RequestParam(value = "adminRedirect", defaultValue = "false") boolean adminRedirect,
+            @RequestParam(value = "userRedirect", defaultValue = "false") boolean userRedirect) {
+        if(userRedirect){
+            return "redirect:/user";
+        }
         return "secured/index";
     }
 
     @GetMapping(value = {"/user","/packagetracking","/public/home", "/packagetracking/public/home"})
-    public String userPage() {
+    public String userPage(
+            @RequestParam(value = "adminRedirect", defaultValue = "false") boolean adminRedirect,
+            @RequestParam(value = "userRedirect", defaultValue = "false") boolean userRedirect) {
+        if(adminRedirect){
+            return "redirect:/admin";
+        }
         return "public/index";
     }
 

@@ -1,6 +1,7 @@
 package packagetracking.config;
 
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import packagetracking.service.PackageTrackingUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -46,13 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/resources/static/**", "/images/**", "/fonts/**", "/css/**","/js/**", "/packagetracking/public/**").permitAll()
-                .antMatchers("/", "/packagetracking/**").permitAll()
+                .antMatchers("/","/user", "/packagetracking/**").permitAll()
                 .antMatchers("/new_package","/tracking_list").hasRole("CUSTOMER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/packagetracking/public/login")
-                .defaultSuccessUrl("/packagetracking/")
+                .defaultSuccessUrl("/default")
                 .failureUrl("/packagetracking/public/login?error")
                 .permitAll()
                 .and()
