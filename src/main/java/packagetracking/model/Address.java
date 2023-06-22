@@ -8,9 +8,9 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int addressID;
-    private String Street;
+    private String street;
     private String zipcode;
-    private String State;
+    private String state;
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private User user;
 
@@ -18,9 +18,9 @@ public class Address {
     }
 
     public Address(String street, String zipcode, String state, User user) {
-        Street = street;
+        this.street = street;
         this.zipcode = zipcode;
-        State = state;
+        this.state = state;
         this.user = user;
     }
 
@@ -33,11 +33,11 @@ public class Address {
     }
 
     public String getStreet() {
-        return Street;
+        return street;
     }
 
     public void setStreet(String street) {
-        Street = street;
+        this.street = street;
     }
 
     public String getZipcode() {
@@ -49,11 +49,11 @@ public class Address {
     }
 
     public String getState() {
-        return State;
+        return state;
     }
 
     public void setState(String state) {
-        State = state;
+        this.state = state;
     }
 
     public User getUser() {

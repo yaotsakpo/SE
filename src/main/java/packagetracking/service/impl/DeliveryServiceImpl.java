@@ -6,6 +6,9 @@ import packagetracking.model.DeliveryRequest;
 import packagetracking.repository.DeliveryRequestRepository;
 import packagetracking.service.DeliveryService;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Component
@@ -61,6 +64,6 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public List<DeliveryRequest> searchDeliveryRequests(String searchString) {
-        return null;
+        return deliveryRequestRepository.findAllByStatusContainingOrRequestPackageTrackingIDContaining(searchString, searchString);
     }
 }

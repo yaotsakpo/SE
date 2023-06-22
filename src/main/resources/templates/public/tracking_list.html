@@ -41,7 +41,7 @@
             <div class="row" style="padding-bottom: 5%">
               <div class="col-md-9" style="padding-left: 7%">
                 <div class="input-group" id="adv-search">
-                  <input type="text" class="form-control" placeholder="Track Your Package" />
+                  <input type="text" class="form-control" id="searchString" placeholder="Search your request" />
                   <div class="input-group-btn">
                     <div class="btn-group" role="group">
                       <div class="dropdown dropdown-lg">
@@ -71,6 +71,8 @@
                   <th>Package Weight</th>
                   <th>Package Height</th>
                   <th>Status</th>
+                  <th>Processing Agent</th>
+                  <th>Action</th>
                 </tr>
                 </thead>
                 <tbody id="deliveryRequestListTable">
@@ -82,6 +84,15 @@
                   <td th:text="${deliveryRequest.weight}"></td>
                   <td th:text="${deliveryRequest.height}"></td>
                   <td th:text="${deliveryRequest.status}"></td>
+                  <td>
+                    <div th:if="${deliveryRequest.invoice != null}" class="contact-container">
+                      <a href="#" th:text="${deliveryRequest.validator.firstName + ' ' +deliveryRequest.validator.lastName}"></a>
+                      <p>On <span th:text="${#temporals.format(deliveryRequest.invoice.invoiceDate, 'MMM d, yyyy')}"></span></p>
+                    </div>
+                  </td>
+                  <td th:if="${deliveryRequest.invoice != null}">
+                      <a href="#" th:onclick="'loadInvoice(\'' + ${deliveryRequest.requestID} + '\')'"> View invoice </a>
+                  </td>
                 </tr>
                 <tr th:if="${requestCount < 1}">
                   <td colspan="8" th:align="center">No Delivery Request found</td>
@@ -168,6 +179,46 @@
       </div>
     </div>
 
+  </div>
+
+
+  <!-- Invoice Modal -->
+  <div class="modal" id="invoiceModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="invoiceTitle">View Invoice</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <fieldset>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="price">Price</label>
+                  <input id="price" name="price" type="number" step="any" class="form-control" disabled>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea id="description" class="form-control" rows="7" cols="20" name="description" disabled></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div style="float:right;" id="actionArea">
+              <a href="#" class="btn btn-success" style="color: white !important"> Accept Invoice </a>
+              <a href="#" class="btn btn-danger" style="color: white !important"> Decline Invoice </a>
+            </div>
+          </fieldset>
+
+      </div>
+    </div>
   </div>
 
 </div>

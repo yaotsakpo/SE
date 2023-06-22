@@ -26,6 +26,8 @@ public class DeliveryRequest {
     private Package requestPackage;
     private double weight;
     private double height;
+    @OneToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    private Invoice invoice;
 
     public DeliveryRequest() {
     }
@@ -118,5 +120,13 @@ public class DeliveryRequest {
 
     public void setHeight(double height) {
         this.height = height;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }

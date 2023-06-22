@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import packagetracking.Contrat.DeliveryRequestWrapper;
+import packagetracking.Contrat.InvoiceWrapper;
 import packagetracking.model.Address;
 import packagetracking.model.DeliveryRequest;
+import packagetracking.model.Invoice;
 import packagetracking.model.User;
 import packagetracking.service.DeliveryService;
 
@@ -77,6 +79,7 @@ public class BaseController {
         mav.addObject("deliveryRequests", deliveryRequests);
         mav.addObject("searchString", "");
         mav.addObject("requestCount", deliveryRequests.size());
+        mav.addObject("InvoiceWrapper", new InvoiceWrapper());
         mav.setViewName("secured/index");
         return mav;
     }

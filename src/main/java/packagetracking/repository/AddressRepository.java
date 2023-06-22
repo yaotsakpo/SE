@@ -15,4 +15,6 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
     @Query("Select a from Address a where a.user.userId = :userid")
     public List<Address> findAllByRequestUser(@RequestParam int userid);
 
+    public List<Address> findAllByStreetContainingOrZipcodeContainingOrStateContaining(String Street, String zipcode, String State);
+
 }

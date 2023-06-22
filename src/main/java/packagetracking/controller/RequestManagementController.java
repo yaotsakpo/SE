@@ -27,7 +27,6 @@ public class RequestManagementController {
     DeliveryService deliveryService;
 
     @GetMapping(value = {"/details/{requestID}"})
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?>  details(@PathVariable Integer requestID) {
         DeliveryRequest deliveryRequest = deliveryService.getDeliveryRequestById(requestID);
         return ResponseEntity.ok().body(deliveryRequest);
@@ -36,9 +35,6 @@ public class RequestManagementController {
     @GetMapping(value = {"/process/{requestID}"})
     public String processRequest(@PathVariable Integer requestID) {
         DeliveryRequest deliveryRequest = deliveryService.getDeliveryRequestById(requestID);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User connectedAdmin = (User) authentication.getPrincipal();
-        deliveryRequest.setValidator(connectedAdmin);
         deliveryRequest.setStatus("Processed");
         String randomString = generateRandomString();
         Package deliveryPackage = new Package("P-"+randomString);
@@ -86,5 +82,11 @@ public class RequestManagementController {
         }
 
         return sb.toString();
+    }
+
+    @GetMapping(value = {"/search/{searchString}"})
+    public ResponseEntity<?> searchStudentsUsingAjax(@PathVariable String searchString) {
+        List<DeliveryRequest> deliveryRequests = deliveryService.searchDeliveryRequests(searchString);
+        return ResponseEntity.ok().body(deliveryRequests);
     }
 }

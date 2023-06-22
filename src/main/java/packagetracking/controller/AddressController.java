@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import packagetracking.model.Address;
+import packagetracking.model.CreditCard;
 import packagetracking.model.User;
 import packagetracking.service.AddressService;
 
@@ -85,6 +86,12 @@ public class AddressController {
     public String deleteStudent(@PathVariable Integer AddressId) {
         addressService.deleteAddressById(AddressId);
         return "redirect:/address/list";
+    }
+
+    @GetMapping(value = {"/search/{searchString}"})
+    public ResponseEntity<?> searchAddressUsingAjax(@PathVariable String searchString) {
+        List<Address> addresses = addressService.searchAddress(searchString);
+        return ResponseEntity.ok().body(addresses);
     }
     
 }

@@ -16,4 +16,7 @@ public interface DeliveryRequestRepository extends JpaRepository<DeliveryRequest
 
     @Query("Select d from DeliveryRequest d where d.status = :status")
     public List<DeliveryRequest> findAllByStatus(@RequestParam String status);
+
+    List<DeliveryRequest> findAllByStatusContainingOrRequestPackageTrackingIDContaining(String status,String trackingID);
+
 }

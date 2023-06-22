@@ -18,4 +18,6 @@ public interface CreditCardRepository extends JpaRepository<CreditCard, Integer>
 
     @Query("Select c from CreditCard c where c.user.userId = :userid and c.preferredCard = true")
     public CreditCard findPreferredCard(@RequestParam int userid);
+
+    List<CreditCard> findAllByIssueNameContaining(String issueName);
 }

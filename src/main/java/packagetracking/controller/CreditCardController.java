@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import packagetracking.model.CreditCard;
+import packagetracking.model.DeliveryRequest;
 import packagetracking.model.User;
 import packagetracking.service.CreditCardService;
 
@@ -106,6 +107,12 @@ public class CreditCardController {
 
 
         return "redirect:/payment_option/list";
+    }
+
+    @GetMapping(value = {"/search/{searchString}"})
+    public ResponseEntity<?> searchCreditCardUsingAjax(@PathVariable String searchString) {
+        List<CreditCard> creditCards = creditCardService.searchCreditCards(searchString);
+        return ResponseEntity.ok().body(creditCards);
     }
 
 

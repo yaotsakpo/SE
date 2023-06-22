@@ -37,7 +37,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<Address> searchAddress(String searchString) {
-        return null;
+        return addressRepository.findAllByStreetContainingOrZipcodeContainingOrStateContaining(searchString,searchString,searchString);
     }
 
     @Override

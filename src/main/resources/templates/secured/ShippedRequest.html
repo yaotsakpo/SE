@@ -44,6 +44,7 @@
                     <th>Shipping From</th>
                     <th>Destination</th>
                     <th>Status</th>
+                    <th>Processing Agent</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -59,9 +60,20 @@
                     <td th:text="${deliveryRequest.pickupAddress.Street + ' ' + deliveryRequest.pickupAddress.zipcode + ' ' + deliveryRequest.pickupAddress.State }"></td>
                     <td th:text="${deliveryRequest.deliveryAddress.Street + ' ' + deliveryRequest.deliveryAddress.zipcode + ' ' + deliveryRequest.deliveryAddress.State }"></td>
                     <td th:text="${deliveryRequest.status}"></td>
+
+                    <td>
+                      <div th:if="${deliveryRequest.invoice != null}" class="contact-container">
+                        <a href="#" th:text="${deliveryRequest.validator.firstName + ' ' +deliveryRequest.validator.lastName}"></a>
+                        <p>On <span th:text="${#temporals.format(deliveryRequest.invoice.invoiceDate, 'MMM d, yyyy')}"></span></p>
+                      </div>
+                    </td>
+
                     <td>
                       <a th:href="@{'/request/deliver/{requestID}'(requestID=${deliveryRequest.requestID})}">Deliver Package</a> |
                       <a th:href="@{'/request/cancel/{requestID}'(requestID=${deliveryRequest.requestID})}">Cancel Request</a>
+                      <span th:if="${deliveryRequest.invoice != null}">
+                          |  <a href="#" th:onclick="'loadInvoice(\'' + ${deliveryRequest.requestID} + '\')'"> View invoice </a>
+                      </span>
                     </td>
                   </tr>
                   <tr th:if="${requestCount < 1}">
@@ -79,6 +91,43 @@
       <!-- end container -->
   </section>
   <!-- =-=-=-=-=-=-= Tracking History End =-=-=-=-=-=-= -->
+
+
+  <!-- Invoice Modal -->
+  <div class="modal" id="invoiceModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="invoiceTitle">View Invoice</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <fieldset>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="price">Price</label>
+                <input id="price" name="price" type="number" step="any" class="form-control" disabled>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" class="form-control" rows="7" cols="20" name="description" disabled></textarea>
+              </div>
+            </div>
+          </div>
+
+        </fieldset>
+
+      </div>
+    </div>
+  </div>
+
 
 
 

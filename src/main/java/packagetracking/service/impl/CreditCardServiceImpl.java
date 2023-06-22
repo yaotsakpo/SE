@@ -37,7 +37,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     @Override
     public List<CreditCard> searchCreditCards(String searchString) {
-        return null;
+        return creditCardRepository.findAllByIssueNameContaining(searchString);
     }
 
     @Override
