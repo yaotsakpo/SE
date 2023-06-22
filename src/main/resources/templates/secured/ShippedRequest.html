@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+  <title>Online Package Tracking Service - Shipped Requests</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+  <!-- =-=-=-=-=-=-= Tracking History =-=-=-=-=-=-= -->
+  <section id="order-tracking" class="section-padding-80">
+    <div class="container">
+      <!-- Row -->
+      <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-12">
+          <!-- Search Filter -->
+          <div class="package-search">
+            <div class="row" style="padding-bottom: 5%">
+              <div class="col-md-12" >
+                <div class="input-group" id="adv-search">
+                  <input type="text" class="form-control" placeholder="Search a request" />
+                  <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                      <div class="dropdown dropdown-lg">
+                        <button type="button" class="btn btn-primary" style="padding: 15px 25px;"><span
+                                class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Search Filter End -->
+            <!-- Tracking History -->
+            <div class="block-content">
+              <div class="table-responsive">
+                <table class="table table-clean-paddings margin-bottom-0">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Shipping From</th>
+                    <th>Destination</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody id="deliveryRequestListTable" >
+                  <tr th:each="deliveryRequest,iterStat : ${deliveryRequests}">
+                    <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
+                    <td>
+                      <div class="contact-container">
+                        <a href="#" th:text="${deliveryRequest.requestUser.firstName + ' ' +deliveryRequest.requestUser.lastName}"></a>
+                        <p>On <span th:text="${#temporals.format(deliveryRequest.requestDate, 'MMM d, yyyy')}"></span></p>
+                      </div>
+                    </td>
+                    <td th:text="${deliveryRequest.pickupAddress.Street + ' ' + deliveryRequest.pickupAddress.zipcode + ' ' + deliveryRequest.pickupAddress.State }"></td>
+                    <td th:text="${deliveryRequest.deliveryAddress.Street + ' ' + deliveryRequest.deliveryAddress.zipcode + ' ' + deliveryRequest.deliveryAddress.State }"></td>
+                    <td th:text="${deliveryRequest.status}"></td>
+                    <td>
+                      <a th:href="@{'/request/deliver/{requestID}'(requestID=${deliveryRequest.requestID})}">Deliver Package</a> |
+                      <a th:href="@{'/request/cancel/{requestID}'(requestID=${deliveryRequest.requestID})}">Cancel Request</a>
+                    </td>
+                  </tr>
+                  <tr th:if="${requestCount < 1}">
+                    <td colspan="8" th:align="center">No Shipped Delivery Request found</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Tracking History End -->
+          </div>
+        </div>
+        <!-- Row End -->
+      </div>
+      <!-- end container -->
+  </section>
+  <!-- =-=-=-=-=-=-= Tracking History End =-=-=-=-=-=-= -->
+
+
+
+</div>
+<th:block layout:fragment="footer"></th:block>
+
+<div layout:fragment="jscontent">
+  <script type="text/javascript" th:src="@{/js/shipped_list.js}"></script>
+</div>
+</body>
+</html>

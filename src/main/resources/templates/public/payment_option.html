@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+    <title>Online Package Tracking Service - Payment Options</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- =-=-=-=-=-=-= PAGE BREADCRUMB =-=-=-=-=-=-= -->
+    <section class="breadcrumbs-area parallex">
+        <div class="container">
+            <div class="row">
+                <div class="page-title">
+                    <div class="col-sm-12 col-md-6 page-heading text-left">
+                        <h3>Credit card management </h3>
+                        <h2>Payment Options</h2>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <ul class="breadcrumbs">
+                            <li><a href="/">home</a></li>
+                            <li><a href="#">Payment Option</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =-=-=-=-=-=-= PAGE BREADCRUMB END =-=-=-=-=-=-= -->
+
+    <!-- =-=-=-=-=-=-= Credit Card Table =-=-=-=-=-=-= -->
+    <section id="credit-card" class="section-padding-80">
+        <div class="container">
+            <!-- Row -->
+            <div class="row">
+                <div class="col-sm-12 col-xs-12 col-md-12">
+                    <!-- Search Filter -->
+                    <div class="credit-card-search">
+                        <div class="row" style="padding-bottom: 5%">
+                            <div class="col-md-9" style="padding-left: 7%">
+                                <div class="input-group" id="adv-search">
+                                    <input type="text" class="form-control" placeholder="Credit card" />
+                                    <div class="input-group-btn">
+                                        <div class="btn-group" role="group">
+                                            <div class="dropdown dropdown-lg">
+                                                <button type="button" class="btn btn-primary" style="padding: 15px 25px;"><span
+                                                        class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding-left: 5%">
+                                <button type="button" class="btn btn-primary" id="AddNewCardBtn" style="padding: 15px 25px;">
+                                    Add new card</button>
+                            </div>
+                        </div>
+
+                        <!-- Search Filter End -->
+                        <!-- Tracking History -->
+                        <div class="block-content">
+                            <div class="table-responsive">
+                                <table class="table table-clean-paddings margin-bottom-0">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Card Number</th>
+                                        <th>Issue Name</th>
+                                        <th>Expiry Date</th>
+                                        <th>Preferred</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="creditCardListTable" >
+                                    <tr th:each="creditCard,iterStat : ${creditCards}">
+                                        <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
+                                        <td th:text="${creditCard.cardNumber}"></td>
+                                        <td th:text="${creditCard.issueName}"></td>
+                                        <td th:text="${creditCard.expiryDate}"></td>
+                                        <td th:if="${creditCard.preferredCard == true}">
+                                            Yes
+                                        </td>
+                                        <td th:if="${creditCard.preferredCard == false}">
+                                            No
+                                        </td>
+                                        <td><a href="#" th:onclick="'loadCard(\'' + ${creditCard.cardID} + '\')'"  >Edit</a>
+                                            <a th:href="@{'/payment_option/delete/{cardID}'(cardID=${creditCard.cardID})}"> | Delete</a>
+                                            <a th:if="${creditCard.preferredCard == false}" th:href="@{'/payment_option/preferred/{cardID}'(cardID=${creditCard.cardID})}"> | Make Preferred</a>
+                                        </td>
+
+                                    </tr>
+                                    <tr th:if="${creditCardsCount < 1}">
+                                        <td colspan="8" th:align="center">No Card found</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Tracking History End -->
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- end container -->
+    </section>
+    <!-- =-=-=-=-=-=-= Tracking History End =-=-=-=-=-=-= -->
+
+
+    <!-- New Card Modal -->
+    <div class="modal" id="newCreditCardModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newCreditCardModalTitle">New Credit Card Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="newCreditCardForm" th:action="@{/payment_option/add}" method="post" th:object="${CreditCard}">
+                    <fieldset>
+                        <div class="row">
+                            <input type="hidden" name="cardID" th:value="${CreditCard.cardID}"/>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="cardNumber">Number</label>
+                                    <span th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}"
+                                          class="alert alert-danger"></span>
+                                    <input id="cardNumber" name="cardNumber" type="text" class="form-control"
+                                           th:value="${CreditCard.cardNumber}" autofocus required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="issueName">issue Name</label>
+                                    <span th:if="${#fields.hasErrors('issueName')}" th:errors="*{issueName}"
+                                          class="alert alert-danger"></span>
+                                    <input id="issueName" name="issueName" type="text" class="form-control"
+                                           th:value="${CreditCard.issueName}" autofocus required>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="expiryDate">Expiry Date</label>
+                                    <span th:if="${#fields.hasErrors('expiryDate')}" th:errors="*{expiryDate}"
+                                          class="alert alert-danger"></span>
+                                    <input id="expiryDate" name="expiryDate" type="date" class="form-control"
+                                           th:value="${CreditCard.expiryDate}" autofocus required>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div style="float:right;">
+                            <button id="btnSubmit" type="submit" class="btn btn-outline-success">Save</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Update Card Modal -->
+    <div class="modal" id="updateCreditCardModal" tabindex="-1" role="dialog" aria-labelledby="updateCreditCardModalTitle"
+         aria-hidden="true">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateCreditCardModalTitle">Update CreditCard Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateCreditCardForm" method="post" th:action="@{/payment_option/edit}" th:object="${CreditCard}">
+                    <fieldset>
+                        <input type="hidden" id="updateCreditCardId" name="cardID" th:value="${CreditCard.cardID}" />
+                        <input type="hidden" id="updateCreditCardPreferredCard" name="preferredCard" th:value="${CreditCard.preferredCard}" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="updateCreditCardNumber">Number</label>
+                                    <span th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}"
+                                          class="alert alert-danger"></span>
+                                    <input id="updateCreditCardNumber" name="cardNumber" type="text"
+                                           class="form-control" th:value="${CreditCard.cardNumber}" autofocus required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="updateIssueName">issue Name</label>
+                                    <span th:if="${#fields.hasErrors('issueName')}" th:errors="*{issueName}"
+                                          class="alert alert-danger"></span>
+                                    <input id="updateIssueName" name="issueName" type="text" class="form-control"
+                                           th:value="${CreditCard.issueName}" autofocus required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="updateExpiryDate">Expiry Date</label>
+                                    <span th:if="${#fields.hasErrors('expiryDate')}" th:errors="*{expiryDate}"
+                                          class="alert alert-danger"></span>
+                                    <input id="updateExpiryDate" name="expiryDate" type="text" class="form-control"
+                                           th:value="${CreditCard.expiryDate}" autofocus>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div style="float:right;">
+                            <button id="btnSubmit" type="submit" class="btn btn-outline-success">Update</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<th:block layout:fragment="footer"></th:block>
+
+<div layout:fragment="jscontent">
+    <script type="text/javascript" th:src="@{/js/payment_option.js}"></script>
+</div>
+
+</body>
+</html>

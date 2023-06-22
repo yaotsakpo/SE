@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+  <title>Online Package Tracking Service - Address</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <!-- =-=-=-=-=-=-= PAGE BREADCRUMB =-=-=-=-=-=-= -->
+  <section class="breadcrumbs-area parallex">
+    <div class="container">
+      <div class="row">
+        <div class="page-title">
+          <div class="col-sm-12 col-md-6 page-heading text-left">
+            <h3>Address management </h3>
+            <h2>User Address</h2>
+          </div>
+          <div class="col-sm-12 col-md-6 text-right">
+            <ul class="breadcrumbs">
+              <li><a href="/">home</a></li>
+              <li><a href="#">User Address</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =-=-=-=-=-=-= PAGE BREADCRUMB END =-=-=-=-=-=-= -->
+
+  <!-- =-=-=-=-=-=-= Address Table =-=-=-=-=-=-= -->
+  <section id="address" class="section-padding-80">
+    <div class="container">
+      <!-- Row -->
+      <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-12">
+          <!-- Search Filter -->
+          <div class="address-search">
+            <div class="row" style="padding-bottom: 5%">
+              <div class="col-md-9" style="padding-left: 7%">
+                <div class="input-group" id="adv-search">
+                  <input type="text" class="form-control" placeholder="Address" />
+                  <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                      <div class="dropdown dropdown-lg">
+                        <button type="button" class="btn btn-primary" style="padding: 15px 25px;"><span
+                                class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3" style="padding-left: 5%">
+                <button type="button" class="btn btn-primary" id="AddNewAddressBtn" style="padding: 15px 25px;">
+                  Add new address</button>
+              </div>
+            </div>
+
+            <!-- Search Filter End -->
+            <!-- Tracking History -->
+            <div class="block-content">
+              <div class="table-responsive">
+                <table class="table table-clean-paddings margin-bottom-0">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Street</th>
+                    <th>zipcode</th>
+                    <th>State</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody id="addressListTable" >
+                  <tr th:each="addressRow,iterStat : ${address}">
+                    <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
+                    <td th:text="${addressRow.Street}"></td>
+                    <td th:text="${addressRow.zipcode}"></td>
+                    <td th:text="${addressRow.State}"></td>
+                    <td><a href="#" th:onclick="'loadAddress(\'' + ${addressRow.addressID} + '\')'"  >Edit</a>
+                      <a th:href="@{'/address/delete/{addressID}'(addressID=${addressRow.addressID})}"> | Delete</a>
+                    </td>
+
+                  </tr>
+                  <tr th:if="${addressCount < 1}">
+                    <td colspan="8" th:align="center">No Address found</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Tracking History End -->
+          </div>
+        </div>
+        <!-- Row End -->
+      </div>
+      <!-- end container -->
+  </section>
+  <!-- =-=-=-=-=-=-= Tracking History End =-=-=-=-=-=-= -->
+
+
+  <!-- New Address Modal -->
+  <div class="modal" id="newAddressModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newAddressModalTitle">New Address Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="newAddressForm" th:action="@{/address/add}" method="post" th:object="${Address}">
+          <fieldset>
+            <div class="row">
+              <input type="hidden" name="addressID" th:value="${Address.addressID}"/>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="Street">Street</label>
+                  <span th:if="${#fields.hasErrors('Street')}" th:errors="*{Street}"
+                        class="alert alert-danger"></span>
+                  <input id="Street" name="Street" type="text" class="form-control"
+                         th:value="${Address.Street}" autofocus required>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="zipcode">zipcode</label>
+                  <span th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"
+                        class="alert alert-danger"></span>
+                  <input id="zipcode" name="zipcode" type="text" class="form-control"
+                         th:value="${Address.zipcode}" autofocus required>
+                </div>
+              </div>
+
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="State">State</label>
+                  <span th:if="${#fields.hasErrors('State')}" th:errors="*{State}"
+                        class="alert alert-danger"></span>
+                  <input id="State" name="State" type="text" class="form-control"
+                         th:value="${Address.State}" autofocus required>
+                </div>
+              </div>
+
+            </div>
+
+            <div style="float:right;">
+              <button id="btnSubmit" type="submit" class="btn btn-outline-success">Save</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Update Address Modal -->
+  <div class="modal" id="updateAddressModal" tabindex="-1" role="dialog" aria-labelledby="updateAddressModalTitle"
+       aria-hidden="true">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateAddressModalTitle">Update Address Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="updateAddressForm" method="post" th:action="@{/address/edit}" th:object="${Address}">
+          <fieldset>
+            <input type="hidden" id="updateAddressId" name="addressID" th:value="${Address.addressID}" />
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="updateAddressStreet">Street</label>
+                  <span th:if="${#fields.hasErrors('Street')}" th:errors="*{Street}"
+                        class="alert alert-danger"></span>
+                  <input id="updateAddressStreet" name="Street" type="text"
+                         class="form-control" th:value="${Address.Street}" autofocus required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="updateZipcode">zipcode</label>
+                  <span th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"
+                        class="alert alert-danger"></span>
+                  <input id="updateZipcode" name="zipcode" type="text" class="form-control"
+                         th:value="${Address.zipcode}" autofocus required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="updateState">State</label>
+                  <span th:if="${#fields.hasErrors('State')}" th:errors="*{State}"
+                        class="alert alert-danger"></span>
+                  <input id="updateState" name="State" type="text" class="form-control"
+                         th:value="${Address.State}" autofocus>
+                </div>
+              </div>
+            </div>
+
+
+            <div style="float:right;">
+              <button id="btnSubmit" type="submit" class="btn btn-outline-success">Update</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<th:block layout:fragment="footer"></th:block>
+
+<div layout:fragment="jscontent">
+  <script type="text/javascript" th:src="@{/js/address.js}"></script>
+</div>
+
+</body>
+</html>

@@ -1,36 +1,51 @@
 package packagetracking.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import packagetracking.Contrat.DeliveryRequestWrapper;
+import packagetracking.model.Address;
+import packagetracking.model.DeliveryRequest;
 import packagetracking.model.User;
+import packagetracking.service.DeliveryService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Objects;
 
 
 @ControllerAdvice
 public class BaseController {
 
+    @Autowired
+    DeliveryService deliveryService;
+
     @ModelAttribute
-    public void globalAttributes(Model model, RedirectAttributes redirectAttributes) {
+    public void globalAttributes(Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if (!isAjaxRequest(request)) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            model.addAttribute("username", username);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        model.addAttribute("username", username);
-
-        // Check the user's role
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+            // Check the user's role
+            boolean isAdmin = authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .anyMatch(role -> role.equals("ROLE_ADMIN"));
 
 
-        // Perform redirect based on user's role
-        if (isAdmin) {
-            redirectAttributes.addAttribute("adminRedirect", true);
-        } else {
-            redirectAttributes.addAttribute("userRedirect", true);
+//         Perform redirect based on user's role
+            if (isAdmin) {
+                redirectAttributes.addAttribute("adminRedirect", true);
+            } else {
+                redirectAttributes.addAttribute("userRedirect", true);
+            }
         }
     }
 
@@ -41,7 +56,6 @@ public class BaseController {
         boolean isAdmin = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .anyMatch(role -> role.equals("ROLE_ADMIN"));
-
         if (isAdmin) {
             return "redirect:/admin";
         } else {
@@ -51,13 +65,88 @@ public class BaseController {
     }
 
     @GetMapping(value = {"/admin"})
-    public String adminPage (
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Object adminPage (
             @RequestParam(value = "adminRedirect", defaultValue = "false") boolean adminRedirect,
             @RequestParam(value = "userRedirect", defaultValue = "false") boolean userRedirect) {
         if(userRedirect){
             return "redirect:/packagetracking";
         }
-        return "secured/index";
+        ModelAndView mav = new ModelAndView();
+        List<DeliveryRequest> deliveryRequests = deliveryService.getAllPendingDelivery();
+        mav.addObject("deliveryRequests", deliveryRequests);
+        mav.addObject("searchString", "");
+        mav.addObject("requestCount", deliveryRequests.size());
+        mav.setViewName("secured/index");
+        return mav;
+    }
+
+    @GetMapping(value = {"/shipped"})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Object adminShippedPage (
+            @RequestParam(value = "adminRedirect", defaultValue = "false") boolean adminRedirect,
+            @RequestParam(value = "userRedirect", defaultValue = "false") boolean userRedirect) {
+        if(userRedirect){
+            return "redirect:/packagetracking";
+        }
+        ModelAndView mav = new ModelAndView();
+        List<DeliveryRequest> deliveryRequests = deliveryService.getAllShippedDelivery();
+        mav.addObject("deliveryRequests", deliveryRequests);
+        mav.addObject("searchString", "");
+        mav.addObject("requestCount", deliveryRequests.size());
+        mav.setViewName("secured/ShippedRequest");
+        return mav;
+    }
+
+    @GetMapping(value = {"/delivered"})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Object adminDeliveredPage (
+            @RequestParam(value = "adminRedirect", defaultValue = "false") boolean adminRedirect,
+            @RequestParam(value = "userRedirect", defaultValue = "false") boolean userRedirect) {
+        if(userRedirect){
+            return "redirect:/packagetracking";
+        }
+        ModelAndView mav = new ModelAndView();
+        List<DeliveryRequest> deliveryRequests = deliveryService.getAllDeliveredDelivery();
+        mav.addObject("deliveryRequests", deliveryRequests);
+        mav.addObject("searchString", "");
+        mav.addObject("requestCount", deliveryRequests.size());
+        mav.setViewName("secured/DeliveredRequest");
+        return mav;
+    }
+
+    @GetMapping(value = {"/processed"})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Object adminProcessedPage (
+            @RequestParam(value = "adminRedirect", defaultValue = "false") boolean adminRedirect,
+            @RequestParam(value = "userRedirect", defaultValue = "false") boolean userRedirect) {
+        if(userRedirect){
+            return "redirect:/packagetracking";
+        }
+        ModelAndView mav = new ModelAndView();
+        List<DeliveryRequest> deliveryRequests = deliveryService.getAllProcessedDelivery();
+        mav.addObject("deliveryRequests", deliveryRequests);
+        mav.addObject("searchString", "");
+        mav.addObject("requestCount", deliveryRequests.size());
+        mav.setViewName("secured/ProcessedRequest");
+        return mav;
+    }
+
+    @GetMapping(value = {"/canceled"})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Object adminCanceledPage (
+            @RequestParam(value = "adminRedirect", defaultValue = "false") boolean adminRedirect,
+            @RequestParam(value = "userRedirect", defaultValue = "false") boolean userRedirect) {
+        if(userRedirect){
+            return "redirect:/packagetracking";
+        }
+        ModelAndView mav = new ModelAndView();
+        List<DeliveryRequest> deliveryRequests = deliveryService.getAllCanceledDelivery();
+        mav.addObject("deliveryRequests", deliveryRequests);
+        mav.addObject("searchString", "");
+        mav.addObject("requestCount", deliveryRequests.size());
+        mav.setViewName("secured/canceledRequest");
+        return mav;
     }
 
     @GetMapping(value = {"/packagetracking","/public/home", "/packagetracking/public/home"})
@@ -70,9 +159,9 @@ public class BaseController {
         return "public/index";
     }
 
-    @GetMapping(value = {"/about","/public/about","/packagetracking/about"})
-    public String about() {
-        return "public/about";
+    private boolean isAjaxRequest(HttpServletRequest request) {
+        return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
+
 }
 

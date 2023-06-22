@@ -51,14 +51,39 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="main-navigation">
                     <ul class="nav navbar-nav">
-                        <li class="dropdown" id="home">
+                        <li class="dropdown" id="home" sec:authorize="!hasRole('ROLE_ADMIN') or isAnonymous()">
                             <a class="dropdown-toggle"  href="/">Home</a>
                         </li>
                         <li class="dropdown" id="tracking_list" sec:authorize="hasRole('ROLE_CUSTOMER')">
-                            <a class="dropdown-toggle"  href="/tracking_list" >Tracking Order History</a>
+                            <a class="dropdown-toggle"  href="/package" >Tracking Order History</a>
                         </li>
-                        <li class="dropdown" id="new_package" sec:authorize="hasRole('ROLE_CUSTOMER')">
-                            <a class="dropdown-toggle"  href="/new_package" >Cargo Booking</a>
+
+                        <li class="dropdown" id="payment_option" sec:authorize="hasRole('ROLE_CUSTOMER')">
+                            <a class="dropdown-toggle"  href="/payment_option/list" >Payment Options</a>
+                        </li>
+
+                        <li class="dropdown" id="address" sec:authorize="hasRole('ROLE_CUSTOMER')">
+                            <a class="dropdown-toggle"  href="/address/list" >User Address</a>
+                        </li>
+
+                        <li class="dropdown" id="pending_delivery" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="dropdown-toggle"  href="/admin" >Pending Delivery Request</a>
+                        </li>
+
+                        <li class="dropdown" id="processed_delivery" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="dropdown-toggle"  href="/processed" >Processed Delivery Request</a>
+                        </li>
+
+                        <li class="dropdown" id="shipped_delivery" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="dropdown-toggle"  href="/shipped" >Shipped Delivery Request</a>
+                        </li>
+
+                        <li class="dropdown" id="delivered_delivery" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="dropdown-toggle"  href="/delivered" >Delivered Delivery Request</a>
+                        </li>
+
+                        <li class="dropdown" id="canceled_delivery" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="dropdown-toggle"  href="/canceled" >Canceled Delivery Request</a>
                         </li>
 
                         <li class="dropdown" id="about_us" sec:authorize="!hasRole('ROLE_ADMIN') or isAnonymous()">
